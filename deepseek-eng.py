@@ -32,9 +32,17 @@ prompt_session = PromptSession(
 # --------------------------------------------------------------------------------
 load_dotenv()  # Load environment variables from .env file
 client = OpenAI(
-    api_key=os.getenv("DEEPSEEK_API_KEY"),
-    base_url="https://api.deepseek.com"
-)  # Configure for DeepSeek API
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://openrouter.ai/api/v1",
+)
+
+completion = client.chat.completions.create(
+    extra_headers={
+        "HTTP-Referer"="localhost:8080/chat",
+        "X-Title"="DeepSeek Engineer with OpenRouter",
+    },
+    model="deepseek/deepseek-r1-0528:free"
+)
 
 # --------------------------------------------------------------------------------
 # 2. Define our schema using Pydantic for type safety
